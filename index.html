@@ -1,118 +1,354 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-ZA" data-role="citizen" data-urgency="normal">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrisisConnect Portal — Kopano Phu Ecosystem</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <meta name="theme-color" content="#0a0e1a">
+  <meta name="description" content="CrisisConnect — Adaptive mission-grade disaster response PWA. Report incidents, coordinate responders, manage crises offline-first. Built for African conditions by Kopano Labs.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="CrisisConnect">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://crisisconnect.kopanolabs.com/">
+  <meta property="og:title" content="CrisisConnect — Adaptive Crisis Response PWA">
+  <meta property="og:description" content="Mission-grade adaptive web app for disaster response. 6 dimensions of adaptation: connectivity, role, urgency, device, trust, local context.">
+  <meta property="og:site_name" content="CrisisConnect">
+  <meta property="og:locale" content="en_ZA">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CrisisConnect — Adaptive Crisis Response PWA">
+  <meta name="twitter:description" content="Mission-grade adaptive web app for disaster response by Kopano Labs.">
+
+  <title>CrisisConnect — Adaptive Crisis Response</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="stars-backdrop"></div>
-    <div class="glass-container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="brand-section">
-                <div class="logo-pulse"></div>
-                <h1 id="app-title">CRISIS<span>CONNECT</span></h1>
+  <!-- Offline Banner -->
+  <div class="offline-banner" id="offlineBanner" role="alert">
+    ⚡ You are offline — CrisisConnect is running in field mode. Queued actions will sync when connectivity returns.
+  </div>
+
+  <div class="app-shell" id="appShell">
+    <!-- ═══ HEADER ═══ -->
+    <header class="app-header" id="appHeader">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle sidebar">☰</button>
+        <div class="app-logo">
+          <div class="logo-icon">⚡</div>
+          <div class="logo-text">Crisis<span>Connect</span></div>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <!-- Urgency Mode Selector -->
+        <div class="urgency-selector" id="urgencySelector" role="radiogroup" aria-label="Urgency mode">
+          <button class="urgency-btn active" data-urgency="normal" role="radio" aria-checked="true">Normal</button>
+          <button class="urgency-btn" data-urgency="active" role="radio" aria-checked="false">Active</button>
+          <button class="urgency-btn" data-urgency="mass" role="radio" aria-checked="false">Mass</button>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Connection Status -->
+        <div class="connection-badge" id="connectionBadge" data-status="online">
+          <span class="status-dot"></span>
+          <span id="connectionLabel">Online</span>
+        </div>
+
+        <!-- Sync Info -->
+        <div class="sync-info" id="syncInfo">
+          <span>Last sync:</span>
+          <span id="lastSync">just now</span>
+        </div>
+
+        <!-- Role Selector -->
+        <div class="role-selector" id="roleSelector">
+          <button class="role-current" id="roleCurrent" aria-haspopup="true" aria-expanded="false">
+            <span id="roleIcon">👤</span>
+            <span id="roleLabel">Citizen</span>
+            <span>▾</span>
+          </button>
+          <div class="role-dropdown" id="roleDropdown">
+            <button class="role-option active" data-role="citizen" data-icon="👤">👤 Citizen</button>
+            <button class="role-option" data-role="operator" data-icon="📋">📋 Operator / Dispatcher</button>
+            <button class="role-option" data-role="responder" data-icon="🚑">🚑 Field Responder</button>
+            <button class="role-option" data-role="command" data-icon="🎯">🎯 Command Layer</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="app-sidebar" id="appSidebar">
+      <!-- Quick Stats -->
+      <div class="sidebar-stats" id="sidebarStats">
+        <div class="stat-card critical">
+          <div class="stat-value" id="statActive">3</div>
+          <div class="stat-label">Active</div>
+        </div>
+        <div class="stat-card warning">
+          <div class="stat-value" id="statPending">7</div>
+          <div class="stat-label">Pending</div>
+        </div>
+        <div class="stat-card safe">
+          <div class="stat-value" id="statResolved">24</div>
+          <div class="stat-label">Resolved</div>
+        </div>
+        <div class="stat-card info">
+          <div class="stat-value" id="statQueued">0</div>
+          <div class="stat-label">Queued</div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Operations</div>
+        <button class="nav-item active" data-view="dashboard" id="navDashboard">📊 Dashboard</button>
+        <button class="nav-item" data-view="incidents" id="navIncidents">🔴 Incidents <span class="nav-badge" id="incidentBadge">3</span></button>
+        <button class="nav-item" data-view="report" id="navReport">📝 Report</button>
+        <button class="nav-item" data-view="map" id="navMap">🗺️ Map</button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">System</div>
+        <button class="nav-item" data-view="adaptation" id="navAdaptation">⚙️ Adaptation Status</button>
+        <button class="nav-item" data-view="queue" id="navQueue">📤 Offline Queue <span class="nav-badge hidden" id="queueBadge">0</span></button>
+        <button class="nav-item" data-view="ecosystem" id="navEcosystem">🌐 Ecosystem</button>
+      </div>
+
+      <!-- Device Info -->
+      <div class="device-info" id="deviceInfo">
+        <p><span class="device-label">Device:</span> <span id="deviceClass">detecting...</span></p>
+        <p><span class="device-label">Network:</span> <span id="networkType">detecting...</span></p>
+        <p><span class="device-label">Battery:</span> <span id="batteryLevel">--</span></p>
+        <p><span class="device-label">Cache:</span> <span id="cacheSize">calculating...</span></p>
+      </div>
+    </aside>
+
+    <!-- Sidebar overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main class="app-main" id="appMain">
+      <!-- Install Banner -->
+      <div class="install-banner" id="installBanner">
+        <p>📲 <strong>Install CrisisConnect</strong> for offline access and push notifications</p>
+        <button class="btn btn-primary" id="installBtn">Install</button>
+      </div>
+
+      <!-- Offline Queue Banner -->
+      <div class="offline-queue-banner" id="offlineQueueBanner">
+        <span>📤 <span id="queueCount">0</span> items queued for sync</span>
+        <button class="btn btn-outline" id="forceSync">Force Sync</button>
+      </div>
+
+      <!-- ═══ VIEW: Dashboard ═══ -->
+      <div class="view-container active" id="viewDashboard">
+        <div class="page-header">
+          <h1 class="page-title">Operations Dashboard</h1>
+          <p class="page-subtitle">Real-time overview · <span id="dashboardTimestamp" class="font-mono"></span></p>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="metric-card">
+            <div class="metric-icon">🔴</div>
+            <div class="metric-value text-critical" id="metricCritical">3</div>
+            <div class="metric-label">Critical Incidents</div>
+            <div class="metric-delta up">↑ 2 in last hour</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">🚑</div>
+            <div class="metric-value" id="metricResponders">12</div>
+            <div class="metric-label">Active Responders</div>
+            <div class="metric-delta neutral">— stable</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">⏱️</div>
+            <div class="metric-value" id="metricAvgResponse">4:32</div>
+            <div class="metric-label">Avg Response Time</div>
+            <div class="metric-delta down">↓ 1:15 improvement</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">📡</div>
+            <div class="metric-value text-safe" id="metricUptime">99.2%</div>
+            <div class="metric-label">System Uptime</div>
+            <div class="metric-delta neutral">— 30 day avg</div>
+          </div>
+        </div>
+
+        <!-- Recent Incidents -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Recent Incidents</h2>
+            <span class="card-meta">Last updated: <span id="incidentListTime"></span></span>
+          </div>
+          <div class="incident-list" id="incidentList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ VIEW: Incidents ═══ -->
+      <div class="view-container" id="viewIncidents">
+        <div class="page-header">
+          <h1 class="page-title">Incident Feed</h1>
+          <p class="page-subtitle">All active and recent incidents with trust indicators</p>
+        </div>
+        <div class="incident-list" id="fullIncidentList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- ═══ VIEW: Report ═══ -->
+      <div class="view-container" id="viewReport">
+        <div class="page-header">
+          <h1 class="page-title">Report Incident</h1>
+          <p class="page-subtitle">Submit a new incident report · works offline</p>
+        </div>
+        <div class="card">
+          <form id="reportForm">
+            <div class="form-group">
+              <label class="form-label" for="incidentType">Incident Type</label>
+              <select class="form-select" id="incidentType" required>
+                <option value="">Select type...</option>
+                <option value="flood">🌊 Flood</option>
+                <option value="fire">🔥 Fire</option>
+                <option value="medical">🏥 Medical Emergency</option>
+                <option value="gbv">🛡️ Gender-Based Violence</option>
+                <option value="infrastructure">🏗️ Infrastructure Failure</option>
+                <option value="civil_unrest">⚠️ Civil Unrest</option>
+                <option value="power">⚡ Power / Load Shedding</option>
+                <option value="water">💧 Water Outage</option>
+                <option value="other">📋 Other</option>
+              </select>
             </div>
-            <nav class="sidebar-nav">
-                <a href="#dashboard" class="nav-item active" id="nav-dash">
-                    <span class="icon">📊</span> Dashboard
-                </a>
-                <a href="#lattice" class="nav-item" id="nav-lattice">
-                    <span class="icon">🕸️</span> Lattice Nodes
-                </a>
-                <a href="#telemetry" class="nav-item" id="nav-telemetry">
-                    <span class="icon">📡</span> Telemetry Logs
-                </a>
-                <a href="#about" class="nav-item" id="nav-about">
-                    <span class="icon">🛡️</span> Sovereignty
-                </a>
-            </nav>
-            <div class="sidebar-footer">
-                <p>STATUS: <span class="status-indicator active" id="footer-status-label">ACTIVE</span></p>
-                <p class="renter-text">Renter ID: antigravity-gemini</p>
+            <div class="form-group">
+              <label class="form-label" for="incidentSeverity">Severity</label>
+              <select class="form-select" id="incidentSeverity" required>
+                <option value="low">Low — Informational</option>
+                <option value="medium" selected>Medium — Action needed</option>
+                <option value="high">High — Urgent</option>
+                <option value="critical">Critical — Life threatening</option>
+              </select>
             </div>
-        </aside>
+            <div class="form-group">
+              <label class="form-label" for="incidentLocation">Location</label>
+              <input class="form-input" id="incidentLocation" type="text" placeholder="e.g. Khayelitsha, Cape Town" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="incidentDescription">Description</label>
+              <textarea class="form-textarea" id="incidentDescription" placeholder="Describe the incident..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reporterContact">Contact (optional)</label>
+              <input class="form-input" id="reporterContact" type="text" placeholder="Phone or name">
+            </div>
+            <button type="submit" class="btn btn-danger btn-lg btn-block" id="submitReport">
+              🚨 Submit Report
+            </button>
+          </form>
+        </div>
+      </div>
 
-        <!-- Main Content Surface -->
-        <main class="content-surface">
-            <!-- Header Grid -->
-            <header class="top-bar">
-                <div class="search-box">
-                    <input type="text" placeholder="Search node indicators..." id="search-input">
-                </div>
-                <div class="user-profile">
-                    <span class="status-badge" id="proof-badge">PROOF: VERIFIED</span>
-                    <span class="badge-role">Operator LPH</span>
-                </div>
-            </header>
+      <!-- ═══ VIEW: Map ═══ -->
+      <div class="view-container" id="viewMap">
+        <div class="page-header">
+          <h1 class="page-title">Incident Map</h1>
+          <p class="page-subtitle">Geographic incident distribution</p>
+        </div>
+        <div class="map-container">
+          <div class="map-overlay">
+            <div class="map-icon">🗺️</div>
+            <p>Map integration ready</p>
+            <p class="text-muted" style="margin-top: 0.5rem; font-size: 0.75rem;">Leaflet/Mapbox integration point — cached tiles available offline</p>
+          </div>
+        </div>
+      </div>
 
-            <!-- Dashboard View -->
-            <section id="dashboard" class="tab-view active">
-                <div class="banner-card">
-                    <h2>CrisisConnect Coordination Node</h2>
-                    <p>Sub-brain: <code>crisisconnect_core</code> | Catalog Agent: <code>kp_crisis_connect_01</code></p>
-                    <p class="manifesto-line">"Behold, I make all things new." — Revelation 21:5</p>
-                </div>
+      <!-- ═══ VIEW: Adaptation Status ═══ -->
+      <div class="view-container" id="viewAdaptation">
+        <div class="page-header">
+          <h1 class="page-title">Adaptive System Status</h1>
+          <p class="page-subtitle">All 6 dimensions of CrisisConnect adaptation</p>
+        </div>
+        <div class="adaptation-grid" id="adaptationGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
 
-                <!-- Metrics Grid -->
-                <div class="metrics-grid">
-                    <div class="metric-card glass">
-                        <div class="card-header">
-                            <h3>Lattice Boundary Integrity</h3>
-                            <span class="pulse-emerald"></span>
-                        </div>
-                        <p class="value" id="boundary-val">100%</p>
-                        <span class="label">Zero Bleed Detected</span>
-                    </div>
-                    <div class="metric-card glass">
-                        <div class="card-header">
-                            <h3>Witness Latency</h3>
-                            <span class="pulse-emerald"></span>
-                        </div>
-                        <p class="value" id="latency-val">4.6ms</p>
-                        <span class="label">Real-time Telemetry Rerouted</span>
-                    </div>
-                    <div class="metric-card glass">
-                        <div class="card-header">
-                            <h3>Swarm Active Nodes</h3>
-                            <span class="pulse-emerald"></span>
-                        </div>
-                        <p class="value" id="nodes-val">310</p>
-                        <span class="label">Governed by the Altar</span>
-                    </div>
-                </div>
+      <!-- ═══ VIEW: Offline Queue ═══ -->
+      <div class="view-container" id="viewQueue">
+        <div class="page-header">
+          <h1 class="page-title">Offline Queue</h1>
+          <p class="page-subtitle">Pending items waiting for connectivity</p>
+        </div>
+        <div class="card" id="queueCard">
+          <div class="card-header">
+            <h2 class="card-title">Queued Items</h2>
+            <button class="btn btn-primary" id="syncAll">Sync All</button>
+          </div>
+          <div id="queueList">
+            <p class="text-muted" style="padding: 2rem; text-align: center;">No items in queue — all synced ✅</p>
+          </div>
+        </div>
+      </div>
 
-                <!-- Two-Column Section -->
-                <div class="dashboard-split">
-                    <!-- Live Dispatch Grid -->
-                    <div class="split-left glass">
-                        <div class="split-header">
-                            <h3>Live Dispatch Ticker</h3>
-                            <button class="action-btn" id="btn-refresh-dispatch">Trigger Sweep</button>
-                        </div>
-                        <div class="dispatch-feed" id="dispatch-ticker">
-                            <!-- JS populated -->
-                        </div>
-                    </div>
+      <!-- ═══ VIEW: Ecosystem ═══ -->
+      <div class="view-container" id="viewEcosystem">
+        <div class="page-header">
+          <h1 class="page-title">KPGS Ecosystem</h1>
+          <p class="page-subtitle">Connected nodes in the Kopano Labs governance system</p>
+        </div>
+        <div class="dashboard-grid" id="ecosystemGrid">
+          <a href="https://kopanolabs.com" target="_blank" rel="noopener" class="metric-card" style="text-decoration:none; cursor:pointer;">
+            <div class="metric-icon">🏢</div>
+            <div class="metric-value" style="font-size:1.25rem;">KopanoLabs.com</div>
+            <div class="metric-label">Sovereign Product Studio</div>
+            <div class="metric-delta neutral">Static HTML · Vercel</div>
+          </a>
+          <a href="https://krrababalela.com" target="_blank" rel="noopener" class="metric-card" style="text-decoration:none; cursor:pointer;">
+            <div class="metric-icon">👤</div>
+            <div class="metric-value" style="font-size:1.25rem;">KRRababalela.com</div>
+            <div class="metric-label">Chief Architect Portfolio</div>
+            <div class="metric-delta neutral">Vite+React · Vercel</div>
+          </a>
+          <a href="https://kasilink.com" target="_blank" rel="noopener" class="metric-card" style="text-decoration:none; cursor:pointer;">
+            <div class="metric-icon">💼</div>
+            <div class="metric-value" style="font-size:1.25rem;">KasiLink.com</div>
+            <div class="metric-label">Township Gigs & Opportunities</div>
+            <div class="metric-delta neutral">Next.js+Clerk · Vercel</div>
+          </a>
+          <a href="https://blog.fivesarena.com" target="_blank" rel="noopener" class="metric-card" style="text-decoration:none; cursor:pointer;">
+            <div class="metric-icon">⚽</div>
+            <div class="metric-value" style="font-size:1.25rem;">blog.fivesarena.com</div>
+            <div class="metric-label">Football Culture Blog</div>
+            <div class="metric-delta neutral">Vite+React · Vercel</div>
+          </a>
+          <div class="metric-card" style="border-color: rgba(239,68,68,0.3);">
+            <div class="metric-icon">🔴</div>
+            <div class="metric-value text-critical" style="font-size:1.1rem;">kopanocontext</div>
+            <div class="metric-label">DNS Not Resolving</div>
+            <div class="metric-delta up">CNAME needed → Vercel</div>
+          </div>
+          <div class="metric-card" style="border-color: rgba(16,185,129,0.3);">
+            <div class="metric-icon">⚡</div>
+            <div class="metric-value text-safe" style="font-size:1.1rem;">CrisisConnect</div>
+            <div class="metric-label">This Adaptive PWA</div>
+            <div class="metric-delta down">You are here</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 
-                    <!-- Ledger / System Log -->
-                    <div class="split-right glass">
-                        <h3>Main Brain Ledger (CRUD Audits)</h3>
-                        <div class="audit-log" id="audit-log">
-                            <!-- Dynamic log rows -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Background script -->
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
