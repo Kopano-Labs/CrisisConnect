@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrisisConnect Portal — Kopano Phu Ecosystem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="stars-backdrop"></div>
+    <div class="glass-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand-section">
+                <div class="logo-pulse"></div>
+                <h1 id="app-title">CRISIS<span>CONNECT</span></h1>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" id="nav-dash">
+                    <span class="icon">📊</span> Dashboard
+                </a>
+                <a href="#lattice" class="nav-item" id="nav-lattice">
+                    <span class="icon">🕸️</span> Lattice Nodes
+                </a>
+                <a href="#telemetry" class="nav-item" id="nav-telemetry">
+                    <span class="icon">📡</span> Telemetry Logs
+                </a>
+                <a href="#about" class="nav-item" id="nav-about">
+                    <span class="icon">🛡️</span> Sovereignty
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>STATUS: <span class="status-indicator active" id="footer-status-label">ACTIVE</span></p>
+                <p class="renter-text">Renter ID: antigravity-gemini</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Surface -->
+        <main class="content-surface">
+            <!-- Header Grid -->
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search node indicators..." id="search-input">
+                </div>
+                <div class="user-profile">
+                    <span class="status-badge" id="proof-badge">PROOF: VERIFIED</span>
+                    <span class="badge-role">Operator LPH</span>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <section id="dashboard" class="tab-view active">
+                <div class="banner-card">
+                    <h2>CrisisConnect Coordination Node</h2>
+                    <p>Sub-brain: <code>crisisconnect_core</code> | Catalog Agent: <code>kp_crisis_connect_01</code></p>
+                    <p class="manifesto-line">"Behold, I make all things new." — Revelation 21:5</p>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card glass">
+                        <div class="card-header">
+                            <h3>Lattice Boundary Integrity</h3>
+                            <span class="pulse-emerald"></span>
+                        </div>
+                        <p class="value" id="boundary-val">100%</p>
+                        <span class="label">Zero Bleed Detected</span>
+                    </div>
+                    <div class="metric-card glass">
+                        <div class="card-header">
+                            <h3>Witness Latency</h3>
+                            <span class="pulse-emerald"></span>
+                        </div>
+                        <p class="value" id="latency-val">4.6ms</p>
+                        <span class="label">Real-time Telemetry Rerouted</span>
+                    </div>
+                    <div class="metric-card glass">
+                        <div class="card-header">
+                            <h3>Swarm Active Nodes</h3>
+                            <span class="pulse-emerald"></span>
+                        </div>
+                        <p class="value" id="nodes-val">310</p>
+                        <span class="label">Governed by the Altar</span>
+                    </div>
+                </div>
+
+                <!-- Two-Column Section -->
+                <div class="dashboard-split">
+                    <!-- Live Dispatch Grid -->
+                    <div class="split-left glass">
+                        <div class="split-header">
+                            <h3>Live Dispatch Ticker</h3>
+                            <button class="action-btn" id="btn-refresh-dispatch">Trigger Sweep</button>
+                        </div>
+                        <div class="dispatch-feed" id="dispatch-ticker">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+
+                    <!-- Ledger / System Log -->
+                    <div class="split-right glass">
+                        <h3>Main Brain Ledger (CRUD Audits)</h3>
+                        <div class="audit-log" id="audit-log">
+                            <!-- Dynamic log rows -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Background script -->
+    <script src="app.js"></script>
+</body>
+</html>
