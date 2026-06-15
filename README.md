@@ -1,157 +1,92 @@
-# ⚡ CrisisConnect — Adaptive Crisis Response PWA
+# CrisisConnect — Adaptive Crisis Response PWA | KPGS Ecosystem
 
-> **Mission-grade web application that adapts across 6 dimensions to help the right person make the right decision under bad conditions.**
+> *"The LORD is a refuge for the oppressed, a stronghold in times of trouble."* — Psalm 9:9
 
-[![Live](https://img.shields.io/badge/Live-crisisconnect.kopanolabs.com-ff3d57?style=for-the-badge)](https://crisisconnect.kopanolabs.com)
-[![Kopano Labs](https://img.shields.io/badge/Kopano%20Labs-Sovereign%20Product%20Studio-0a0e1a?style=for-the-badge)](https://kopanolabs.com)
-[![License](https://img.shields.io/badge/License-Proprietary-333?style=for-the-badge)]()
+[![KPGS](https://img.shields.io/badge/KPGS-Governed-7b61ff)](https://crisisconnect.kopanolabs.com)
+[![APWA](https://img.shields.io/badge/APWA-6_Dimensions-e94560)](https://crisisconnect.kopanolabs.com)
+[![SWFUS](https://img.shields.io/badge/SWFUS-Fire-ff6600)](https://crisisconnect.kopanolabs.com)
 
----
+## Live
 
-## What Is CrisisConnect?
-
-CrisisConnect is not a responsive reporting app. It is an **adaptive operations client** built for disaster response in African conditions — where bandwidth is unreliable, devices are constrained, power is intermittent, and trust in data varies.
-
-A normal PWA asks: *"Can this website be installed and work offline?"*
-
-CrisisConnect asks: **"Can this system still help the right person make the right decision under bad conditions?"**
+**🌐 [crisisconnect.kopanolabs.com](https://crisisconnect.kopanolabs.com)**
 
 ---
 
-## 6 Dimensions of Adaptation
+## What Is This
 
-### 1. 📡 Connectivity Adaptation
-| Mode | Behavior |
-|------|----------|
-| **Online Live** | Real-time incident updates, map sync, dispatch, chat |
-| **Degraded** | Text-first UI, compressed payloads, reduced polling |
-| **Offline Field** | Queued forms, cached maps/contacts/protocols, store-and-forward |
-| **Intermittent Sync** | Conflict-aware merge when signal returns |
+CrisisConnect is a **mission-grade Adaptive PWA** for crisis response. Not just responsive layout — it adapts across **6 dimensions** under pressure, poor connectivity, and high-stakes conditions.
 
-### 2. 👤 Role Adaptation
-| Role | Surface |
-|------|---------|
-| **Citizen** | Report incident, request help, receive verified instructions |
-| **Operator/Dispatcher** | Triage queue, SLA timers, escalation actions |
-| **Field Responder** | Navigation, case notes, offline checklist, status updates |
-| **Command Layer** | Heatmaps, resource allocation, bottlenecks, comms integrity |
+> *"Can this system still help the right person make the right decision under bad conditions?"*
 
-### 3. 🚨 Urgency Adaptation
-| Mode | UX Changes |
-|------|------------|
-| **Normal** | Full dashboards, history, analytics |
-| **Active Incident** | One-tap actions, large buttons, fewer choices, pinned protocol |
-| **Mass Incident** | Batching, surge workflows, broadcast tools, 56px+ tap targets |
+## Adaptive PWA — 6 Dimensions
 
-### 4. 📱 Device Adaptation
-- Cheap Android phones → reduced data density, battery-conscious
-- Desktop ops centers → full dashboard, multi-panel
-- Tablets in vehicles → touch-optimized, landscape support
-- Kiosk/public intake → simplified input flows
+| # | Dimension | CrisisConnect Implementation |
+|---|-----------|------------------------------|
+| 1 | **Connectivity** | Online live → degraded text-first → offline field → sync-on-return |
+| 2 | **Role** | Citizen reporter · Dispatcher triage · Field responder · Command layer |
+| 3 | **Urgency** | Normal dashboards → incident one-tap → mass-incident surge workflows |
+| 4 | **Device** | Cheap Android phones · Desktop ops · Vehicle tablets · Public kiosk |
+| 5 | **Trust** | Verified vs unverified · Source confidence · Stale-data warnings |
+| 6 | **Local Context** | Region · Language · Hazard type · Protocol set · Network cost |
 
-### 5. 🔒 Trust Adaptation
-- **Verified** vs **Unverified** report badges
-- Source confidence indicators
-- Last-sync timestamps
-- Stale-data warnings (30min threshold)
-- Duplicate incident probability
-- Chain-of-custody for edits
+## Core PWA Layer
 
-### 6. 🌍 Local Context Adaptation
-- Region-specific protocol sets (SAPS, EMS, metro)
-- Hazard-type workflow specialization (flood ≠ GBV ≠ fire)
-- Language and locale support (en-ZA)
-- Network cost profile awareness
+- ✅ Installable (Add to Home Screen)
+- ✅ Service Worker with offline cache strategy
+- ✅ Background sync where supported
+- ✅ Push notifications
+- ✅ App-shell architecture
+- ✅ Version rollback on failed updates
 
----
+## Adaptive Runtime Layer
 
-## PWA Architecture
+- Network-aware rendering
+- Device capability detection
+- Role-based UI composition
+- Incident-state-based navigation
+- Progressive feature loading
+- Dynamic payload budgets
 
-### Core PWA Layer
-- ✅ Installable (Web App Manifest)
-- ✅ Service Worker with app-shell caching
-- ✅ Offline cache strategy (cache-first shell, network-first API)
-- ✅ Background sync for offline queue
-- ✅ Push notification support
-- ✅ Resilient update flow
+## Operational Resilience Layer
 
-### Adaptive Runtime Layer
-- ✅ Network-aware rendering
-- ✅ Device capability detection (memory, cores, battery)
-- ✅ Role-based UI composition
-- ✅ Incident-state-based navigation
-- ✅ Progressive feature loading
-- ✅ Dynamic payload budgets
+- Local-first writes
+- Sync queue with retry policy
+- Audit trail for all actions
+- Conflict resolution on sync
+- Data freshness indicators
+- Fallback comms patterns
 
-### Operational Resilience Layer
-- ✅ Local-first writes
-- ✅ Sync queue with retry policy
-- ✅ Audit trail
-- ✅ Data freshness indicators
-- ✅ Stale-data warnings
+## Human Factors Layer
 
-### Human Factors Layer
-- ✅ Stress-mode UI (mass incident → 56px+ buttons)
-- ✅ Large tap targets
-- ✅ Text-first critical flows
-- ✅ High-contrast emergency states
-- ✅ Minimal decision friction
+- Stress-mode UI (large targets, fewer choices)
+- Text-first critical flows
+- Accessibility + localization
+- Minimal decision friction
+- High-contrast emergency states
 
----
+## KPGS Governance
 
-## KPGS Ecosystem
+| Module | Status |
+|--------|--------|
+| SeedProtocol | ✅ SWFUS: **Fire** |
+| KCLedger | ✅ Observing |
+| CasseyGuardian | ✅ Teaching |
+| AltarGate | ✅ 3-layer gate |
+| POCEnforcement | ✅ Growing |
 
-CrisisConnect is one node in the Kopano Labs governance ecosystem:
+## KPGS Ecosystem Mesh
 
-| Node | URL | Status |
-|------|-----|--------|
-| **Kopano Labs** | [kopanolabs.com](https://kopanolabs.com) | ✅ Live |
-| **KRRababalela** | [krrababalela.com](https://krrababalela.com) | ✅ Live |
-| **KasiLink** | [kasilink.com](https://kasilink.com) | ✅ Live |
-| **CrisisConnect** | [crisisconnect.kopanolabs.com](https://crisisconnect.kopanolabs.com) | ✅ Live |
-| **FivesArena Blog** | [blog.fivesarena.com](https://blog.fivesarena.com) | ✅ Live |
+| Node | URL | SWFUS |
+|------|-----|-------|
+| KopanoLabs | [kopanolabs.com](https://kopanolabs.com) | Soil |
+| KRRababalela | [krrababalela.com](https://krrababalela.com) | Sky |
+| KasiLink | [kasilink.com](https://kasilink.com) | Water |
+| **CrisisConnect** | **[crisisconnect.kopanolabs.com](https://crisisconnect.kopanolabs.com)** | **Fire** |
+| FivesArena | [fivesarena.com](https://fivesarena.com) | Underground |
+| KopanoContext | [kopanocontext.kopanolabs.com](https://kopanocontext.kopanolabs.com) | Sky |
 
----
+## Sovereign System Engineer
 
-## Tech Stack
+**Kholofelo Robyn Rababalela** — Creator of KPGS.
 
-- **Frontend:** Vanilla HTML/CSS/JS — no framework dependencies, maximum resilience
-- **PWA:** Service Worker + Web App Manifest
-- **Design:** Dark-mode-first, glassmorphism, Inter font family
-- **Caching:** App-shell architecture with network-first API strategy
-- **Hosting:** Vercel (edge network)
-
----
-
-## Maturity Criteria
-
-CrisisConnect is evaluated against these operational questions:
-
-- [x] Does it degrade gracefully on weak networks?
-- [x] Can a field user complete critical actions offline?
-- [x] Does the interface change by user role?
-- [x] Does the workflow compress during active incidents?
-- [x] Can it preserve trust when data is stale or disputed?
-- [x] Does it prioritize operational continuity over visual polish?
-
----
-
-## Development
-
-```bash
-# Serve locally
-npx serve .
-
-# Or use any static file server
-python -m http.server 8080
-```
-
----
-
-## License
-
-Proprietary — Kopano Labs © 2026. All rights reserved.
-
-Built with operational discipline by [Kopano Labs](https://kopanolabs.com).
-
-**Chief Architect:** [Kholofelo Robyn Rababalela](https://krrababalela.com)
+**Jesus is King. Classify before interpret. Receipt or HOLD.**
