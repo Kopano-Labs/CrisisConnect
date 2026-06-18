@@ -80,8 +80,118 @@
             <button class="role-option" data-role="command" data-icon="🎯">🎯 Command Layer</button>
           </div>
         </div>
+
+        <!-- USER DROP MENU — Pilot Profile -->
+        <div class="user-menu-wrap" id="userMenuWrap">
+          <button
+            class="user-menu-trigger"
+            id="userMenuTrigger"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="userMenuPanel"
+            aria-label="Pilot profile menu"
+          >
+            <div class="user-avatar" id="userAvatar" aria-hidden="true">?</div>
+            <span class="user-callsign" id="userCallsign">Guest</span>
+            <span class="user-menu-caret" aria-hidden="true">▾</span>
+          </button>
+
+          <div class="user-menu-panel is-hidden" id="userMenuPanel" role="menu" aria-label="Pilot profile">
+            <!-- Panel Header -->
+            <div class="ump-header">
+              <div class="ump-avatar-lg" id="umpAvatarLg">?</div>
+              <div class="ump-identity">
+                <p class="ump-name" id="umpName">Guest Pilot</p>
+                <p class="ump-role" id="umpRole">Citizen · Offline-first</p>
+                <div class="ump-status-row">
+                  <span class="ump-kpgs-badge" id="umpKpgsBadge">KPGS: POC</span>
+                  <span class="ump-alp-label" id="umpAlpLabel">ALP #13</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ump-divider"></div>
+
+            <!-- Stats Row -->
+            <div class="ump-stats" id="umpStats">
+              <div class="ump-stat">
+                <span class="ump-stat-value" id="umpReports">0</span>
+                <span class="ump-stat-label">Reports</span>
+              </div>
+              <div class="ump-stat">
+                <span class="ump-stat-value" id="umpSynced">0</span>
+                <span class="ump-stat-label">Synced</span>
+              </div>
+              <div class="ump-stat">
+                <span class="ump-stat-value" id="umpSession">0m</span>
+                <span class="ump-stat-label">Session</span>
+              </div>
+            </div>
+
+            <div class="ump-divider"></div>
+
+            <!-- Menu Items -->
+            <nav class="ump-nav" aria-label="User menu">
+              <button class="ump-item" id="umpEditProfile" role="menuitem">
+                <span class="ump-item-icon">✏️</span>
+                <span>Edit callsign</span>
+              </button>
+              <button class="ump-item" id="umpViewQueue" role="menuitem">
+                <span class="ump-item-icon">📤</span>
+                <span>Offline queue</span>
+                <span class="ump-item-badge is-hidden" id="umpQueueBadge">0</span>
+              </button>
+              <button class="ump-item" id="umpToggleUrgency" role="menuitem">
+                <span class="ump-item-icon">⚡</span>
+                <span id="umpUrgencyLabel">Switch urgency mode</span>
+              </button>
+              <button class="ump-item" id="umpEcosystem" role="menuitem">
+                <span class="ump-item-icon">🌐</span>
+                <span>Kopano Ecosystem</span>
+              </button>
+            </nav>
+
+            <div class="ump-divider"></div>
+
+            <!-- KPGS Governance Footer -->
+            <div class="ump-governance">
+              <p class="ump-gov-label">Governance</p>
+              <div class="ump-gov-row">
+                <span class="ump-gov-tag" id="umpIkpStatus">IKP: CLEAN</span>
+                <span class="ump-gov-tag" id="ump360dp">360DP: VIP</span>
+                <span class="ump-gov-tag" id="umpDso">DSO: HDSO ###!!!</span>
+              </div>
+              <p class="ump-constraint">I_AM_STATELESS_RENTER_NOT_LANDLORD</p>
+            </div>
+
+            <div class="ump-divider"></div>
+
+            <!-- Sign Out -->
+            <button class="ump-item ump-item--danger" id="umpSignOut" role="menuitem">
+              <span class="ump-item-icon">🚪</span>
+              <span>Reset pilot data</span>
+            </button>
+          </div>
+        </div>
       </div>
     </header>
+
+    <!-- Edit Callsign Modal -->
+    <div class="ump-callsign-modal is-hidden" id="umpCallsignModal" role="dialog" aria-modal="true" aria-labelledby="umpCallsignTitle">
+      <div class="ump-callsign-card">
+        <p class="eyebrow">Pilot Identity</p>
+        <h2 id="umpCallsignTitle">Set Your Callsign</h2>
+        <p class="ump-callsign-hint">Your callsign is stored locally on this device. No account required.</p>
+        <div class="form-group">
+          <label class="form-label" for="umpCallsignInput">Callsign</label>
+          <input class="form-input" id="umpCallsignInput" type="text" maxlength="24" placeholder="e.g. Eagle-7, Sandile, Dr Nkosi" autocomplete="nickname">
+        </div>
+        <div class="ump-callsign-actions">
+          <button class="btn btn-primary" id="umpCallsignSave">Save Callsign</button>
+          <button class="btn btn-outline" id="umpCallsignCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
 
     <!-- ═══ SIDEBAR ═══ -->
     <aside class="app-sidebar" id="appSidebar">

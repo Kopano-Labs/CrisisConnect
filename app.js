@@ -541,12 +541,301 @@
     initForceSync();
     initClock();
     updateStats();
+    initUserMenu();  // ── USER DROP MENU ─────────────────────
 
     // Set initial role
     setRole('citizen', '👤', '👤 Citizen');
 
     console.log('[CrisisConnect] Adaptive PWA initialized');
     console.log('[CrisisConnect] 6 dimensions active: connectivity, role, urgency, device, trust, local');
+    console.log('[CrisisConnect] USER DROP MENU: active | IKP: CLEAN | 360DP: VIP ####!!!!');
+  }
+
+  /* ── 17. USER DROP MENU (UMP) ───────────────────────────── */
+  /*
+   * USER DROP MENU — Pilot profile dropdown
+   * KPGS: IKP CLEAN | 360DP VIP ####!!!! | DSO HDSO ###!!!
+   * localStorage key: cc_pilot_profile
+   * Stores: callsign, role, reports_count, synced_count, session_start
+   * I_AM_STATELESS_RENTER_NOT_LANDLORD
+   */
+  const UMP_KEY       = 'cc_pilot_profile';
+  const UMP_ALP_COUNT = 13;    // current ALP activation count
+  const UMP_DSO       = 'HDSO ###!!!';
+  const UMP_IKP       = 'IKP: CLEAN';
+  const UMP_360DP     = '360DP: VIP ####!!!!';
+
+  function loadPilot() {
+    try {
+      const raw = localStorage.getItem(UMP_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) { return null; }
+  }
+
+  function savePilot(profile) {
+    try { localStorage.setItem(UMP_KEY, JSON.stringify(profile)); } catch (_) {}
+  }
+
+  function getInitials(callsign) {
+    if (!callsign || callsign === 'Guest') return '?';
+    const parts = callsign.trim().split(/[\s\-_]+/);
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return callsign.substring(0, 2).toUpperCase();
+  }
+
+  function formatSessionTime(startIso) {
+    if (!startIso) return '0m';
+    const mins = Math.floor((Date.now() - new Date(startIso).getTime()) / 60000);
+    if (mins < 60) return `${mins}m`;
+    return `${Math.floor(mins / 60)}h${mins % 60}m`;
+  }
+
+  function umpRender(pilot) {
+    const callsign = (pilot && pilot.callsign) ? pilot.callsign : 'Guest';
+    const initials  = getInitials(callsign);
+    const reports   = (pilot && pilot.reports_count) ? pilot.reports_count : 0;
+    const synced    = (pilot && pilot.synced_count)  ? pilot.synced_count  : 0;
+    const session   = (pilot && pilot.session_start) ? formatSessionTime(pilot.session_start) : '0m';
+    const roleLabel = state.role.charAt(0).toUpperCase() + state.role.slice(1);
+
+    // Trigger button
+    const avatarEl    = $('#userAvatar');
+    const callsignEl  = $('#userCallsign');
+    if (avatarEl)   avatarEl.textContent   = initials;
+    if (callsignEl) callsignEl.textContent = callsign;
+
+    // Panel
+    const nameEl    = $('#umpName');
+    const roleEl    = $('#umpRole');
+    const avatarLg  = $('#umpAvatarLg');
+    const reports_  = $('#umpReports');
+    const synced_   = $('#umpSynced');
+    const session_  = $('#umpSession');
+    const alpEl     = $('#umpAlpLabel');
+    const ikpEl     = $('#umpIkpStatus');
+    const dpEl      = $('#ump360dp');
+    const dsoEl     = $('#umpDso');
+    const urgEl     = $('#umpUrgencyLabel');
+
+    if (nameEl)   nameEl.textContent  = pilot ? callsign : 'Guest Pilot';
+    if (roleEl)   roleEl.textContent  = `${roleLabel} · ${navigator.onLine ? 'Online' : 'Field Mode'}`;
+    if (avatarLg) avatarLg.textContent = initials;
+    if (reports_) reports_.textContent = reports;
+    if (synced_)  synced_.textContent  = synced;
+    if (session_) session_.textContent = session;
+    if (alpEl)    alpEl.textContent   = `ALP #${UMP_ALP_COUNT}`;
+    if (ikpEl)    ikpEl.textContent   = UMP_IKP;
+    if (dpEl)     dpEl.textContent    = UMP_360DP;
+    if (dsoEl)    dsoEl.textContent   = `DSO: ${UMP_DSO}`;
+
+    // Urgency toggle label
+    const nextUrgency = { normal: 'active', active: 'mass', mass: 'normal' }[state.urgency];
+    if (urgEl) urgEl.textContent = `Switch to ${nextUrgency} mode`;
+
+    // Offline queue badge in UMP
+    const qBadge = $('#umpQueueBadge');
+    if (qBadge) {
+      const qCount = state.offlineQueue.length;
+      qBadge.textContent = qCount;
+      qBadge.classList.toggle('is-hidden', qCount === 0);
+    }
+  }
+
+  function umpOpen() {
+    const panel   = $('#userMenuPanel');
+    const trigger = $('#userMenuTrigger');
+    if (!panel) return;
+    umpRender(loadPilot());
+    panel.classList.remove('is-hidden');
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+
+  function umpClose() {
+    const panel   = $('#userMenuPanel');
+    const trigger = $('#userMenuTrigger');
+    if (!panel) return;
+    panel.classList.add('is-hidden');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  function umpToggle() {
+    const panel = $('#userMenuPanel');
+    if (panel && panel.classList.contains('is-hidden')) {
+      umpOpen();
+    } else {
+      umpClose();
+    }
+  }
+
+  function initUserMenu() {
+    // Ensure/bootstrap pilot profile
+    let pilot = loadPilot();
+    if (!pilot) {
+      pilot = {
+        callsign:      'Guest',
+        role:          'citizen',
+        reports_count: 0,
+        synced_count:  0,
+        session_start: new Date().toISOString(),
+        kpgs_dso:      UMP_DSO,
+        alp_count:     UMP_ALP_COUNT,
+      };
+      savePilot(pilot);
+    } else {
+      // Refresh session start on each boot
+      pilot.session_start = new Date().toISOString();
+      pilot.alp_count     = UMP_ALP_COUNT;
+      savePilot(pilot);
+    }
+
+    // Render initial state into trigger button
+    umpRender(pilot);
+
+    // Toggle on trigger click
+    const trigger = $('#userMenuTrigger');
+    if (trigger) {
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        umpToggle();
+      });
+    }
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      const wrap = $('#userMenuWrap');
+      if (wrap && !wrap.contains(e.target)) {
+        umpClose();
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') umpClose();
+    });
+
+    // Edit callsign
+    const umpEdit = $('#umpEditProfile');
+    if (umpEdit) {
+      umpEdit.addEventListener('click', () => {
+        umpClose();
+        const modal = $('#umpCallsignModal');
+        const input = $('#umpCallsignInput');
+        const p     = loadPilot();
+        if (input && p) input.value = p.callsign !== 'Guest' ? p.callsign : '';
+        if (modal) modal.classList.remove('is-hidden');
+        if (input) setTimeout(() => input.focus(), 50);
+      });
+    }
+
+    // Save callsign
+    const umpSave = $('#umpCallsignSave');
+    if (umpSave) {
+      umpSave.addEventListener('click', () => {
+        const input  = $('#umpCallsignInput');
+        const modal  = $('#umpCallsignModal');
+        const val    = input ? input.value.trim() : '';
+        if (!val) { toast('Callsign cannot be empty', 'error'); return; }
+        const p = loadPilot() || {};
+        p.callsign = val;
+        savePilot(p);
+        umpRender(p);
+        if (modal) modal.classList.add('is-hidden');
+        toast(`Callsign set: ${val}`, 'success');
+      });
+    }
+
+    // Cancel callsign modal
+    const umpCancel = $('#umpCallsignCancel');
+    if (umpCancel) {
+      umpCancel.addEventListener('click', () => {
+        const modal = $('#umpCallsignModal');
+        if (modal) modal.classList.add('is-hidden');
+      });
+    }
+
+    // Enter key in callsign input → save
+    const umpInput = $('#umpCallsignInput');
+    if (umpInput) {
+      umpInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') $('#umpCallsignSave')?.click();
+      });
+    }
+
+    // View offline queue
+    const umpQueue = $('#umpViewQueue');
+    if (umpQueue) {
+      umpQueue.addEventListener('click', () => {
+        umpClose();
+        showView('queue');
+        $$('.nav-item').forEach(n => n.classList.remove('active'));
+        $('#navQueue')?.classList.add('active');
+      });
+    }
+
+    // Toggle urgency
+    const umpUrgency = $('#umpToggleUrgency');
+    if (umpUrgency) {
+      umpUrgency.addEventListener('click', () => {
+        const next = { normal: 'active', active: 'mass', mass: 'normal' }[state.urgency];
+        setUrgency(next);
+        umpClose();
+      });
+    }
+
+    // Go to ecosystem
+    const umpEco = $('#umpEcosystem');
+    if (umpEco) {
+      umpEco.addEventListener('click', () => {
+        umpClose();
+        showView('ecosystem');
+        $$('.nav-item').forEach(n => n.classList.remove('active'));
+        $('#navEcosystem')?.classList.add('active');
+      });
+    }
+
+    // Sign out / reset pilot
+    const umpOut = $('#umpSignOut');
+    if (umpOut) {
+      umpOut.addEventListener('click', () => {
+        umpClose();
+        if (!confirm('Reset all pilot data on this device? This cannot be undone.')) return;
+        localStorage.removeItem(UMP_KEY);
+        const fresh = {
+          callsign:      'Guest',
+          role:          'citizen',
+          reports_count: 0,
+          synced_count:  0,
+          session_start: new Date().toISOString(),
+          kpgs_dso:      UMP_DSO,
+          alp_count:     UMP_ALP_COUNT,
+        };
+        savePilot(fresh);
+        umpRender(fresh);
+        toast('Pilot data reset. Flying as Guest.', 'info');
+      });
+    }
+
+    // Hook: track reports in profile
+    const reportForm = $('#reportForm');
+    if (reportForm) {
+      reportForm.addEventListener('submit', () => {
+        const p = loadPilot() || {};
+        p.reports_count = (p.reports_count || 0) + 1;
+        if (navigator.onLine) p.synced_count = (p.synced_count || 0) + 1;
+        savePilot(p);
+        // Update session timer in panel if open
+        const panel = $('#userMenuPanel');
+        if (panel && !panel.classList.contains('is-hidden')) umpRender(p);
+      });
+    }
+
+    // Refresh session timer every 60s
+    setInterval(() => {
+      const panel = $('#userMenuPanel');
+      if (panel && !panel.classList.contains('is-hidden')) {
+        umpRender(loadPilot());
+      }
+    }, 60000);
   }
 
   if (document.readyState === 'loading') {
@@ -555,3 +844,4 @@
     init();
   }
 })();
+

@@ -1,6 +1,6 @@
 # CrisisConnect — Adaptive Crisis Response PWA | KPGS Ecosystem
 
-> *"The LORD is a refuge for the oppressed, a stronghold in times of trouble."* — Psalm 9:9
+> _"The LORD is a refuge for the oppressed, a stronghold in times of trouble."_ — Psalm 9:9
 
 [![KPGS](https://img.shields.io/badge/KPGS-Governed-7b61ff)](https://crisisconnect.kopanolabs.com)
 [![APWA](https://img.shields.io/badge/APWA-6_Dimensions-e94560)](https://crisisconnect.kopanolabs.com)
@@ -16,18 +16,18 @@
 
 CrisisConnect is a **mission-grade Adaptive PWA** for crisis response. Not just responsive layout — it adapts across **6 dimensions** under pressure, poor connectivity, and high-stakes conditions.
 
-> *"Can this system still help the right person make the right decision under bad conditions?"*
+> _"Can this system still help the right person make the right decision under bad conditions?"_
 
 ## Adaptive PWA — 6 Dimensions
 
-| # | Dimension | CrisisConnect Implementation |
-|---|-----------|------------------------------|
-| 1 | **Connectivity** | Online live → degraded text-first → offline field → sync-on-return |
-| 2 | **Role** | Citizen reporter · Dispatcher triage · Field responder · Command layer |
-| 3 | **Urgency** | Normal dashboards → incident one-tap → mass-incident surge workflows |
-| 4 | **Device** | Cheap Android phones · Desktop ops · Vehicle tablets · Public kiosk |
-| 5 | **Trust** | Verified vs unverified · Source confidence · Stale-data warnings |
-| 6 | **Local Context** | Region · Language · Hazard type · Protocol set · Network cost |
+| #   | Dimension         | CrisisConnect Implementation                                           |
+| --- | ----------------- | ---------------------------------------------------------------------- |
+| 1   | **Connectivity**  | Online live → degraded text-first → offline field → sync-on-return     |
+| 2   | **Role**          | Citizen reporter · Dispatcher triage · Field responder · Command layer |
+| 3   | **Urgency**       | Normal dashboards → incident one-tap → mass-incident surge workflows   |
+| 4   | **Device**        | Cheap Android phones · Desktop ops · Vehicle tablets · Public kiosk    |
+| 5   | **Trust**         | Verified vs unverified · Source confidence · Stale-data warnings       |
+| 6   | **Local Context** | Region · Language · Hazard type · Protocol set · Network cost          |
 
 ## Core PWA Layer
 
@@ -66,24 +66,24 @@ CrisisConnect is a **mission-grade Adaptive PWA** for crisis response. Not just 
 
 ## KPGS Governance
 
-| Module | Status |
-|--------|--------|
-| SeedProtocol | ✅ SWFUS: **Fire** |
-| KCLedger | ✅ Observing |
-| CasseyGuardian | ✅ Teaching |
-| AltarGate | ✅ 3-layer gate |
-| POCEnforcement | ✅ Growing |
+| Module         | Status             |
+| -------------- | ------------------ |
+| SeedProtocol   | ✅ SWFUS: **Fire** |
+| KCLedger       | ✅ Observing       |
+| CasseyGuardian | ✅ Teaching        |
+| AltarGate      | ✅ 3-layer gate    |
+| POCEnforcement | ✅ Growing         |
 
 ## KPGS Ecosystem Mesh
 
-| Node | URL | SWFUS |
-|------|-----|-------|
-| KopanoLabs | [kopanolabs.com](https://kopanolabs.com) | Soil |
-| KRRababalela | [krrababalela.com](https://krrababalela.com) | Sky |
-| KasiLink | [kasilink.com](https://kasilink.com) | Water |
-| **CrisisConnect** | **[crisisconnect.kopanolabs.com](https://crisisconnect.kopanolabs.com)** | **Fire** |
-| FivesArena | [fivesarena.com](https://fivesarena.com) | Underground |
-| KopanoContext | [kopanocontext.kopanolabs.com](https://kopanocontext.kopanolabs.com) | Sky |
+| Node              | URL                                                                      | SWFUS       |
+| ----------------- | ------------------------------------------------------------------------ | ----------- |
+| KopanoLabs        | [kopanolabs.com](https://kopanolabs.com)                                 | Soil        |
+| KRRababalela      | [krrababalela.com](https://krrababalela.com)                             | Sky         |
+| KasiLink          | [kasilink.com](https://kasilink.com)                                     | Water       |
+| **CrisisConnect** | **[crisisconnect.kopanolabs.com](https://crisisconnect.kopanolabs.com)** | **Fire**    |
+| FivesArena        | [fivesarena.com](https://fivesarena.com)                                 | Underground |
+| KopanoContext     | [kopanocontext.kopanolabs.com](https://kopanocontext.kopanolabs.com)     | Sky         |
 
 ## Sovereign System Engineer
 

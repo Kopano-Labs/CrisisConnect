@@ -1258,3 +1258,374 @@ body.is-offline .offline-banner {
 .font-mono { font-family: var(--font-mono); }
 .font-bold { font-weight: 700; }
 .hidden { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   USER DROP MENU (UMP) — Pilot Profile Dropdown
+   KPGS: IKP CLEAN | 360DP VIP ####!!!! | DSO HDSO ###!!!
+   I_AM_STATELESS_RENTER_NOT_LANDLORD
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Trigger Button ───────────────────────────────────────── */
+.user-menu-wrap {
+  position: relative;
+}
+
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 5px 10px 5px 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.user-menu-trigger:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-border);
+  color: var(--text-primary);
+}
+
+.user-menu-trigger[aria-expanded="true"] {
+  background: var(--accent-glow);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+/* ── Avatar Circle ────────────────────────────────────────── */
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), rgba(59,130,246,0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  border: 1.5px solid var(--accent-border);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.user-callsign {
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu-caret {
+  font-size: 0.625rem;
+  opacity: 0.6;
+  transition: transform var(--transition-fast);
+}
+
+.user-menu-trigger[aria-expanded="true"] .user-menu-caret {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown Panel ───────────────────────────────────────── */
+.user-menu-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 300px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(0,0,0,0.6);
+  z-index: 500;
+  overflow: hidden;
+  animation: ump-in 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-menu-panel.is-hidden {
+  display: none;
+}
+
+@keyframes ump-in {
+  from { opacity: 0; transform: translateY(-10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Panel Header ─────────────────────────────────────────── */
+.ump-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: linear-gradient(135deg,
+    rgba(59, 130, 246, 0.08) 0%,
+    rgba(139, 92, 246, 0.04) 100%
+  );
+}
+
+.ump-avatar-lg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), rgba(59,130,246,0.4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+  border: 2px solid var(--accent-border);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.ump-identity {
+  flex: 1;
+  min-width: 0;
+}
+
+.ump-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ump-role {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin: 0 0 6px;
+}
+
+.ump-status-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.ump-kpgs-badge {
+  font-size: 0.625rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--status-safe);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ump-alp-label {
+  font-size: 0.625rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ── Divider ──────────────────────────────────────────────── */
+.ump-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 0;
+}
+
+/* ── Stats Row ────────────────────────────────────────────── */
+.ump-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.ump-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-md) var(--space-sm);
+  gap: 2px;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.ump-stat:last-child { border-right: none; }
+
+.ump-stat-value {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.ump-stat-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ── Nav Items ────────────────────────────────────────────── */
+.ump-nav {
+  padding: var(--space-xs);
+}
+
+.ump-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.ump-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.ump-item--danger:hover {
+  background: rgba(255, 61, 87, 0.08);
+  color: var(--status-critical);
+}
+
+.ump-item-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.ump-item-badge {
+  margin-left: auto;
+  background: var(--status-critical);
+  color: white;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 100px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.ump-item-badge.is-hidden {
+  display: none;
+}
+
+/* ── KPGS Governance Footer ───────────────────────────────── */
+.ump-governance {
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.ump-gov-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+.ump-gov-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.ump-gov-tag {
+  font-size: 0.625rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--status-info);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ump-constraint {
+  font-size: 0.5625rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  opacity: 0.6;
+  letter-spacing: 0.02em;
+}
+
+/* ── Edit Callsign Modal ──────────────────────────────────── */
+.ump-callsign-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  animation: ump-backdrop-in 200ms ease-out;
+}
+
+.ump-callsign-modal.is-hidden {
+  display: none;
+}
+
+@keyframes ump-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.ump-callsign-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  width: min(420px, calc(100vw - 2rem));
+  box-shadow: var(--shadow-lg);
+  animation: ump-card-in 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes ump-card-in {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ump-callsign-hint {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: var(--space-xs) 0 var(--space-lg);
+}
+
+.ump-callsign-actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+/* ── Mobile overrides ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .user-callsign { display: none; }
+  .user-menu-panel { width: calc(100vw - 2rem); right: 0; }
+  .sync-info { display: none; }
+}
+
